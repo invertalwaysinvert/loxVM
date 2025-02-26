@@ -1,4 +1,4 @@
-use crate::value::{Value, ValueArray};
+use crate::value::Value;
 
 pub enum OpCode {
     Return = 1,

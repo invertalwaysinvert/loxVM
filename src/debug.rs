@@ -4,7 +4,7 @@ pub fn disassemble_chunk(chunk: &Chunk, name: &str) {
     println!("== {} ==", name);
     let mut offset = 0;
     while offset < chunk.code.len() {
-        offset = disassemble_instruction(&chunk, offset);
+        offset = disassemble_instruction(chunk, offset);
     }
 }
 
