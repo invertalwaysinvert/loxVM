@@ -37,12 +37,6 @@ impl Chunk {
         self.lines.push(line);
     }
 
-    pub fn free(&mut self) {
-        self.code.clear();
-        self.constants.clear();
-        self.lines.clear();
-    }
-
     pub fn add_constant(&mut self, value: Value) -> u8 {
         self.constants.push(value);
         match (self.constants.len() - 1).try_into() {

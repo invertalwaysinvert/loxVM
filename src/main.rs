@@ -1,9 +1,11 @@
 use chunk::{Chunk, OpCode};
 use debug::disassemble_chunk;
+use vm::VM;
 
 mod chunk;
 mod debug;
 mod value;
+mod vm;
 
 fn main() {
     let mut chunk = Chunk::new();
@@ -12,5 +14,6 @@ fn main() {
     chunk.write(constant, 123);
     chunk.write(OpCode::Return as u8, 123);
     disassemble_chunk(&chunk, "test chunk");
-    chunk.free();
+    let mut vm = VM::new(chunk);
+    vm.interpret();
 }
