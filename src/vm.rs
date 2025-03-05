@@ -73,21 +73,41 @@ impl VM {
                     self.ip += 1;
 
                     match instruction {
+                        OpCode::Add => self.binary_operation('+'),
+                        OpCode::Divide => self.binary_operation('/'),
                         OpCode::Constant => {
                             let constant = self.chunk.constants[self.chunk.code[self.ip] as usize];
                             self.push(constant);
                             self.ip += 1;
                         }
+                        OpCode::Multiply => self.binary_operation('*'),
+                        OpCode::Negate => {
+                            let value = self.pop();
+                            self.push(value * -1.0);
+                        }
                         OpCode::Return => {
                             println!("{}", self.pop());
                             return InterpretResult::InterpretOK;
                         }
+                        OpCode::Subtract => self.binary_operation('-'),
                     }
                 }
                 Err(_) => {
                     return InterpretResult::InterpretRuntimeError;
                 }
             }
+        }
+    }
+
+    fn binary_operation(&mut self, operator: char) {
+        let b = self.pop();
+        let a = self.pop();
+        match operator {
+            '+' => self.push(a + b),
+            '-' => self.push(a - b),
+            '*' => self.push(a * b),
+            '/' => self.push(a / b),
+            _ => panic!("Invalid binary operator passed in: {}", operator),
         }
     }
 }

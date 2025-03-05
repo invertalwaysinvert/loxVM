@@ -6,6 +6,7 @@ pub fn disassemble_chunk(chunk: &Chunk, name: &str) {
     while offset < chunk.code.len() {
         offset = disassemble_instruction(chunk, offset);
     }
+    println!("===================\n");
 }
 
 pub fn disassemble_instruction(chunk: &Chunk, offset: usize) -> usize {
@@ -17,8 +18,13 @@ pub fn disassemble_instruction(chunk: &Chunk, offset: usize) -> usize {
     }
     match OpCode::try_from(chunk.code[offset]) {
         Ok(instruction) => match instruction {
-            OpCode::Return => simple_instruction("OP_RETURN", offset),
             OpCode::Constant => constant_instruction("OP_CONSTANT", chunk, offset),
+            OpCode::Add => simple_instruction("OP_ADD", offset),
+            OpCode::Divide => simple_instruction("OP_DIVIDE", offset),
+            OpCode::Multiply => simple_instruction("OP_MULTIPLY", offset),
+            OpCode::Negate => simple_instruction("OP_NEGATE", offset),
+            OpCode::Return => simple_instruction("OP_RETURN", offset),
+            OpCode::Subtract => simple_instruction("OP_SUBTRACT", offset),
         },
         Err(_) => {
             println!("Unknown opcode {}", chunk.code[offset]);

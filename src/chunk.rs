@@ -3,6 +3,11 @@ use crate::value::Value;
 pub enum OpCode {
     Return = 1,
     Constant = 2,
+    Negate = 3,
+    Add = 4,
+    Subtract = 5,
+    Multiply = 6,
+    Divide = 7,
 }
 
 impl TryFrom<u8> for OpCode {
@@ -12,6 +17,11 @@ impl TryFrom<u8> for OpCode {
         match value {
             1 => Ok(OpCode::Return),
             2 => Ok(OpCode::Constant),
+            3 => Ok(OpCode::Negate),
+            4 => Ok(OpCode::Add),
+            5 => Ok(OpCode::Subtract),
+            6 => Ok(OpCode::Multiply),
+            7 => Ok(OpCode::Divide),
             _ => Err("Invalid OpCode found"),
         }
     }
